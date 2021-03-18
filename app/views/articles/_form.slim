@@ -1,0 +1,10 @@
+= form_with model: article do |f|
+  div = f.text_field :title, placeholder: 'Title'
+  br
+  div = f.text_area :body, placeholder: 'Write content here'
+  br
+  div = f.number_field :stock, placeholder: 'Number of stock'
+  br
+  div = f.number_field :price, placeholder: 'Price'
+  br
+  div = f.submit 'Submit Article'
