@@ -29,19 +29,19 @@ class ArticlesController < ApplicationController
       flash[:error] = @article.errors.full_messages
     end
 
-    redirect_to action: :admin_index
+    redirect_to action: :index
   end
 
   def update
     @article = Article.find(params[:id])
     @article.update(article_params)
-    redirect_to action: :admin_index
+    redirect_to action: :index
   end
 
   def destroy
     @article = Article.find(params[:id])
     @article.destroy
-    redirect_to action: :admin_index
+    redirect_to action: :index
   end
 
   private
