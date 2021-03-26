@@ -1,0 +1,6 @@
+= form_with model: catagory do |f|
+  div = f.text_field :title, placeholder: 'Title'
+  br
+  div = f.text_area :body, placeholder: 'Write content here'
+  br
+  div = f.submit 'Submit Catagory'

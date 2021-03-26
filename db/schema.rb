@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_18_041406) do
+ActiveRecord::Schema.define(version: 2021_03_26_030309) do
 
   create_table "admins", force: :cascade do |t|
     t.string "firstname"
@@ -43,6 +43,13 @@ ActiveRecord::Schema.define(version: 2021_03_18_041406) do
     t.integer "price"
   end
 
+  create_table "catagories", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "title"
+    t.string "body"
+  end
+
   create_table "comments", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -50,6 +57,15 @@ ActiveRecord::Schema.define(version: 2021_03_18_041406) do
     t.string "text"
     t.integer "article_id"
     t.index ["article_id"], name: "index_comments_on_article_id"
+  end
+
+  create_table "product_catagories", force: :cascade do |t|
+    t.integer "catagory_id"
+    t.integer "article_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["article_id"], name: "index_product_catagories_on_article_id"
+    t.index ["catagory_id"], name: "index_product_catagories_on_catagory_id"
   end
 
 end

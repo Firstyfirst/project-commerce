@@ -1,7 +1,7 @@
 class ArticlesController < ApplicationController
-  before_action :authenticate_admin!, only: [:admin_index, :edit, :new, :create, :update, :destroy]
+  before_action :authenticate_admin!, only: [:edit, :new, :create, :update, :destroy]
 
-  def admin_index
+  def index
     @search = params[:search]
 
     @articles = Article.all
@@ -9,16 +9,6 @@ class ArticlesController < ApplicationController
       .where("title LIKE ? or body LIKE ?", "%#{@search}%", "%#{@search}%") if @search.present?
     @articles = @articles.page(params[:page]).per(5)
   end
-
-  def user_index
-    @search = params[:search]
-
-    @articles = Article.all
-    @articles = @articles
-      .where("title LIKE ? or body LIKE ?", "%#{@search}%", "%#{@search}%") if @search.present?
-    @articles = @articles.page(params[:page]).per(5)
-  end
-  
   def show
     @article = Article.find(params[:id])
   end

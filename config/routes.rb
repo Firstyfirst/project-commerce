@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
   devise_for :admins
-  root 'articles#user_index'
-  get 'articles/admin', to: 'articles#admin_index'
+  root 'articles#index'
 
   resources :articles do
     resources :comments
+  end
+
+  resources :catagories do
+    resources :product_catagories
   end
 end
