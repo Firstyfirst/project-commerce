@@ -9,6 +9,6 @@ div
     div = link_to  "#{article.title}", article_path(article)
 
 -if current_admin
-    = form_with model: [@catagory, @catagory.product_catagory.build] do |f|
-        div = f.collection_select :result, Article.all, :body,:title
-        div = f.submit 'Submit'
+  = form_with model: [@catagory, @catagory.product_catagory.build] do |f|
+      div = f.collection_select :result, Article.all, :body,:title
+      div = f.submit 'Submit'

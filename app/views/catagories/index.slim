@@ -7,11 +7,9 @@
         span.ml-3 = current_admin.email
         span.ml-3 = "#{current_admin.firstname} #{current_admin.lastname}"
         span.ml-3 = link_to 'Logout', destroy_admin_session_path , method: :delete
-        span.ml-3 = link_to 'back',articles_path
     -else
       .float-right
-        span.ml-2 = link_to 'login', admin_session_path
-        span.ml-2 = link_to 'back',articles_path
+        span.ml-2 = link_to 'Login', admin_session_path
 
 .row
   .col
@@ -53,8 +51,12 @@
 .row
   .col-6
     = paginate @catagories
-  -if current_admin
-    .col-6
-      .float-right
-        = link_to new_catagory_path do
-          = button_tag 'Add new Catagory', class: 'btn btn-primary'
+  .col-6 
+    .float-right
+      span.ml-3
+        = link_to articles_path do
+          = button_tag 'Product', class: 'btn btn-primary'
+      -if current_admin
+        span.ml-3
+          = link_to new_catagory_path do
+            = button_tag 'Add new Catagory', class: 'btn btn-primary'

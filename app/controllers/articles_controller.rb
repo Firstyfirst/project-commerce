@@ -5,10 +5,15 @@ class ArticlesController < ApplicationController
     @search = params[:search]
 
     @articles = Article.all
-    @articles = @articles
-      .where("title LIKE ? or body LIKE ?", "%#{@search}%", "%#{@search}%") if @search.present?
+    @articles = @articles.search(@search) if @search.present?
     @articles = @articles.page(params[:page]).per(5)
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data generate_csv(Article.all), file_name: 'articles.csv'}
+    end
   end
+
   def show
     @article = Article.find(params[:id])
   end
@@ -44,9 +49,24 @@ class ArticlesController < ApplicationController
     redirect_to action: :index
   end
 
+  def csv_upload
+    data = params[:csv_file].read.split("\n")
+    data.each do |line|
+      attr = line.split(",").map(&:strip)
+      Article.create title: attr[0], body: attr[1]
+    end
+    redirect_to action: :index
+  end
+
+  def generate_csv(articles)
+    articles.map{ |a| [a.title, a.body, a.created_at.to_date].join(',')}.join("\n")
+  end
+
   private
 
   def article_params
-    params.require(:article).permit(:title, :body, :stock, :price)
+    params.require(:article).permit(:title, :body, :stock, :price, :status => []).tap do |w|
+      w[:status] = w[:status][1].to_i
+    end
   end
 end

@@ -22,6 +22,7 @@
           th No. Comments
           th Stock
           th Price
+          th Status
           th Created at
           th Updated at
           
@@ -33,7 +34,8 @@
             td = a.body
             td = a.comments.count
             td = a.stock
-            td = a.price 
+            td = a.price
+            td = a.status.presence || 'NA' 
             td.font-weight-light = "#{time_ago_in_words(a.created_at)} Ago"
             td.font-weight-light = "#{time_ago_in_words(a.updated_at)} Ago"
           
