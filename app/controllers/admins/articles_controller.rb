@@ -1,4 +1,4 @@
-class ArticlesController < ApplicationController
+class Admins::ArticlesController < ApplicationController
   before_action :authenticate_admin!, only: [:edit, :new, :create, :update, :destroy]
 
   def index
@@ -62,10 +62,16 @@ class ArticlesController < ApplicationController
     articles.map{ |a| [a.title, a.body, a.created_at.to_date].join(',')}.join("\n")
   end
 
+  def delete_image
+    @image = ActiveStorage::Attachment.find(params[:id])
+    @image.purge
+    redirect_to action: :index
+  end
+
   private
 
   def article_params
-    params.require(:article).permit(:title, :body, :stock, :price, :status => []).tap do |w|
+    params.require(:article).permit(:title, :body, :stock, :price, :single_image, multi_image: [], :status => []).tap do |w|
       w[:status] = w[:status][1].to_i
     end
   end

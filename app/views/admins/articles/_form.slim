@@ -1,0 +1,31 @@
+= form_with model: [:admins, article] do |f|
+  h2 Title
+  div = f.text_field :title, placeholder: 'Title'
+  br
+  h2 Body
+  div = f.text_area :body, placeholder: 'Write content here'
+  br
+  h2 Numbers of stock
+  div = f.number_field :stock, placeholder: 'Number of stock'
+  br
+  h2 Price
+  div = f.number_field :price, placeholder: 'Price'
+  br
+  h2 Status 
+  div = f.collection_check_boxes :status, Article.statuses.map, :last, :first
+  br
+
+  h2 Main image
+  - if @article.single_image.attached?
+    div = link_to 'Remove', delete_image_admins_article_url(@article.single_image.id), method: :delete
+  - else
+    div = f.file_field :single_image
+  br
+
+  h2 Support image 
+  - if @article.multi_image.attached?
+    div = f.file_field :multi_image, multiple: true
+  - else
+    div = f.file_field :multi_image, multiple: true
+  br
+  div = f.submit 'Submit Article'

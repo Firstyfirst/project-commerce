@@ -1,9 +1,9 @@
-class ProductCatagoriesController < ApplicationController
+class Admins::ProductCatagoriesController < ApplicationController
     def create
         @catagory = Catagory.find params[:catagory_id]
         product = Article.find_by(body: product_catagory_params[:result])
         @catagory.product_catagory.create(article: product)
-        redirect_to catagories_path
+        redirect_to admins_catagories_path
     end
 
     private

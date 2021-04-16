@@ -7,6 +7,9 @@ class Article < ApplicationRecord
   has_many :product_catagory
   has_many :catagory, through: :product_catagory
 
+  has_one_attached :single_image
+  has_many_attached :multi_image
+
   validates :body, length: { minimum: 4 }
   validate :no_bad_words_in_title
 

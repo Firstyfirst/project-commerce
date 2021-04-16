@@ -1,14 +1,14 @@
 h1 = @catagory.title
-div = link_to 'Back', catagories_path
+div = link_to 'Back', admins_catagories_path
 hr
 div = @catagory.body
 hr
 h2 Article Section
 div
   - @catagory.article.each do |article|
-    div = link_to  "#{article.title}", article_path(article)
+    div = link_to  "#{article.title}", admins_article_path(article)
 
 -if current_admin
-  = form_with model: [@catagory, @catagory.product_catagory.build] do |f|
+  = form_with model: [:admins, @catagory, @catagory.product_catagory.build] do |f|
       div = f.collection_select :result, Article.all, :body,:title
       div = f.submit 'Submit'

@@ -1,6 +1,6 @@
 .row
   .col-6
-    h1 Product list admin
+    h1 Catagory list
   .col-6
     -if current_admin
       .float-right
@@ -9,16 +9,14 @@
         span.ml-3 = link_to 'Logout', destroy_admin_session_path , method: :delete
     -else
       .float-right
-        span.ml-2 = link_to 'Login', admin_session_path 
+        span.ml-2 = link_to 'Login', admin_session_path
 
 .row
-  .col-10
-    = form_tag articles_path, method: :get do
+  .col
+    = form_tag admins_catagories_path, method: :get do
       = text_field_tag 'search', @search, placeholder: 'Type something',
         class: 'form-control'
-  .col-2
-    = link_to articles_path(format: :csv) do
-      = button_tag 'Download CSV', class: 'btn btn-secondary float-right'
+
 .row.mt-2
   .col
     table.table.table-bordered.table-striped.table-hover
@@ -27,57 +25,38 @@
           th ID
           th Title
           th Body
-          th No. Comments
-          th Stock
-          th Price
-          th Status
           th Created at
           th Updated at
           th Action
       tbody
-        - @articles.each do |a|
+        - @catagories.each do |a|
           tr
             td = a.id
             td.font-weight-bold = a.title
             td = a.body
-            td = a.comments.count
-            td = a.stock
-            td = a.price
-            td = a.status.presence || 'NA' 
             td.font-weight-light = "#{time_ago_in_words(a.created_at)} Ago"
             td.font-weight-light = "#{time_ago_in_words(a.updated_at)} Ago"
             td
               span
-                = link_to article_path(a) do
+                = link_to admins_catagory_path(a) do
                   i.fas.fa-eye
-
               -if current_admin
                 span.ml-3
-                  = link_to edit_article_path(a) do
+                  = link_to edit_admins_catagory_path(a) do
                     i.fas.fa-pen
                 span.ml-3
-                  = link_to article_path(a), method: :delete, data: { confirm: "Are you sure?" } do
+                  = link_to admins_catagory_path(a), method: :delete, data: { confirm: "Are you sure?" } do
                     i.fas.fa-trash
 
 .row
   .col-6
-    = paginate @articles
+    = paginate @catagories
   .col-6 
     .float-right
       span.ml-3
-        = link_to catagories_path do
-          = button_tag 'Catagory', class: 'btn btn-primary'
+        = link_to admins_articles_path do
+          = button_tag 'Product', class: 'btn btn-primary'
       -if current_admin
         span.ml-3
-          = link_to new_article_path do
-            = button_tag 'Add new Article', class: 'btn btn-primary'
-
-div
-  hr
-
-.row
-  .col
-    = form_tag articles_csv_upload_path, multipart: true do
-      div = file_field_tag :csv_file
-      br
-      div = submit_tag :upload
+          = link_to new_admins_catagory_path do
+            = button_tag 'Add new Catagory', class: 'btn btn-primary'

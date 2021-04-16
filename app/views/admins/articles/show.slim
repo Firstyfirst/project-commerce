@@ -1,0 +1,35 @@
+h1 = @article.title
+div = link_to 'Back', admins_articles_path
+br
+div = @article.body
+br
+
+h2 Main image 
+- if @article.single_image.attached?
+  = image_tag @article.single_image, style: 'width:300px'
+- else 
+  p None
+
+h3 Support image 
+- if @article.multi_image.attached?
+  table
+    tbody 
+    - (0...@article.multi_image.count).each do |index|
+      td
+        div = image_tag @article.multi_image[index], style: 'height: 100px;'
+        div
+          = link_to 'Remove', delete_image_admins_article_url(@article.multi_image[index].id), method: :delete, style: 'text-align: center;'
+- else
+  p None
+
+br
+h2 Comments Section
+div
+  - @article.comments.each do |comment|
+    div = "#{comment.author} Wrote : #{comment.text}"
+br
+h2 Add new Comment Section
+= form_with model: [:admins, @article, @article.comments.build] do |f|
+  div = f.text_field :author, placeholder: 'Author'
+  div = f.text_area :text, placeholder: 'Write text here'
+  div = f.submit 'Submit Comment'
