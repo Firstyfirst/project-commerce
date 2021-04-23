@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :admins
-  root 'admins/articles#index'
+  root 'homes#index'
+
+  resources :homes, only: :index
 
   namespace :admins do
     namespace :articles do
@@ -18,6 +20,14 @@ Rails.application.routes.draw do
     resources :articles do
       member do
         delete :delete_image
+      end
+    end
+  end
+
+  namespace :api do
+    namespace :v1 do
+      resources :articles, only: [] do
+        resources :comments, only: :index
       end
     end
   end
